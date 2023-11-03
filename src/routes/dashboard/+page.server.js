@@ -1,18 +1,10 @@
-import db from '$lib/server/db';
+import { authenticateUser } from '$lib/server/auth';
+import { redirect } from '@sveltejs/kit';
 
-export async function load() {
-	return db('messages')
-		.select()
-		.then((data) => {
-			return {
-				results: data,
-				error: null
-			};
-		})
-		.catch((error) => {
-			return {
-				results: null,
-				error: error
-			};
-		});
-}
+export const load = async (event) => {
+	const user = authenticateUser(event);
+	if (!user) {
+		throw redirect(302, '/unauthorized');
+	}
+	return { user: user };
+};

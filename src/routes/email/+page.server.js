@@ -8,13 +8,13 @@ const transporter = nodemailer.createTransport({
 	port: 465,
 	secure: true, // Set to true if using SSL
 	auth: {
-		user: 'no-reply@tugbrands.com',
+		user: process.env.EMAIL_ADDRESS,
 		pass: process.env.EMAIL_PASSWORD
 	}
 });
 
 const mailOptions = {
-	from: 'no-reply@tugbrands.com',
+	from: `"TUG Brands Account Maintenance" <${process.env.EMAIL_ADDRESS}>`,
 	to: 'tbeckett1211@gmail.com',
 	subject: 'Password Reset',
 	text: 'Here is your password reset link: https://example.com/reset-password'

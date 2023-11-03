@@ -12,7 +12,7 @@ export const authenticatePermission = (event, permission) => {
 	const { cookies } = event;
 	const userData = JSON.parse(cookies.get('user') ?? '{}');
 	const token = cookies.get('token') ?? '';
-	if (verifyHash(userData, token) && userData[permission]) return userData;
+	if (verifyHash(userData, token) && userData.roles.includes(permission)) return userData;
 	return null;
 };
 

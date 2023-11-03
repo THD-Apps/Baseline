@@ -1,6 +1,4 @@
 <script>
-	let user = 'tim';
-	import '../../app.postcss';
 	import { initializeStores } from '@skeletonlabs/skeleton';
 	initializeStores();
 	import { AppShell, Drawer, getDrawerStore } from '@skeletonlabs/skeleton';

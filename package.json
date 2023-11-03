@@ -30,6 +30,7 @@
   },
   "type": "module",
   "dependencies": {
+    "@descope/node-sdk": "^1.6.0",
     "@floating-ui/dom": "1.5.3",
     "crypto": "^1.0.1",
     "dotenv": "^16.3.1",
