@@ -1,6 +1,9 @@
 <script>
 	import { enhance } from '$app/forms';
 	export let form;
+	export let data;
+	let phone;
+	$: phone = form?.phone ?? data.phone ?? null;
 </script>
 
 <div class="flex justify-center items-center h-full">
@@ -9,7 +12,7 @@
 		<div>
 			{#if form?.missing}
 				<aside class="alert variant-ghost-error mb-4">
-					<div class="text-error-800">You must enter a valid ten digit phone number...</div>
+					<div class="text-error-800">Please enter the code sent via SMS</div>
 				</aside>
 			{:else if form?.incorrect}
 				<aside class="alert variant-ghost-error mb-4">
@@ -22,19 +25,15 @@
 					</div>
 				</aside>
 			{/if}
-			<form method="POST" action="?/loginUser" use:enhance>
-				<label class="mb-1 text-black" for="user">Phone Number</label>
+			<form method="POST" action="?/reset" use:enhance>
+				<label class="mb-1 text-black" for="user">Enter Confirmation Code</label>
 				<div>
-					<input
-						autofocus
-						type="number"
-						min="2011000000"
-						max="9999999999"
-						class="mb-2 w-full rounded-md text-black"
-						name="phone"
-					/>
+					<input autofocus type="number" class="mb-2 w-full rounded-md text-black" name="pin" />
+					<input type="hidden" name="phone" bind:value={phone} />
 				</div>
-				<button type="submit" class="btn w-full variant-filled-primary">Send Text Message</button>
+				<button type="submit" class="btn w-full variant-filled-primary"
+					>Confirm / Reset Password</button
+				>
 			</form>
 		</div>
 	</div>

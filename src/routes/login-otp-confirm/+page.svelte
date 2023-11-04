@@ -7,7 +7,7 @@
 </script>
 
 <div class="flex justify-center items-center h-full">
-	<div class="w-[80%] md:w-[25%] bg-white p-8 rounded-md shadow-xl">
+	<div class="w-[90%] md:w-[25%] bg-white p-8 rounded-md shadow-xl">
 		<img class="mb-3" src="/logo.png" alt="logo" />
 		<div>
 			{#if form?.missing}
