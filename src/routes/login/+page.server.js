@@ -1,12 +1,15 @@
 import { redirect, fail } from '@sveltejs/kit';
-import { hashData, passHash } from '$lib/server/crypto';
+import { passHash } from '$lib/server/crypto';
+import { getJwt } from '$lib/server/auth';
 import { config } from 'dotenv';
 
 config();
 import db from '$lib/server/db';
 import DescopeClient from '@descope/node-sdk';
 
-export async function load({ url, cookies }) {
+export async function load(event) {
+	let cookies = event.cookies;
+	let url = event.url;
 	const code = url.searchParams.get('code') ?? null;
 	if (code) {
 		const descopeClient = DescopeClient({ projectId: process.env.DESCOPE_ID });
@@ -24,20 +27,7 @@ export async function load({ url, cookies }) {
 				if (rows.length > 0) {
 					pass = true;
 					const userData = rows[0];
-					cookies.set('user', JSON.stringify(userData), {
-						path: '/',
-						httpOnly: true,
-						sameSite: 'strict',
-						secure: true,
-						maxAge: 60 * 60 * 8
-					});
-					cookies.set('token', hashData(userData), {
-						path: '/',
-						httpOnly: true,
-						sameSite: 'strict',
-						secure: true,
-						maxAge: 60 * 60 * 8
-					});
+					getJwt(event, cookies, userData);
 				}
 			} catch (error) {
 				return {
@@ -79,20 +69,7 @@ export const actions = {
 			if (rows.length > 0) {
 				pass = true;
 				const userData = rows[0];
-				cookies.set('user', JSON.stringify(userData), {
-					path: '/',
-					httpOnly: true,
-					sameSite: 'strict',
-					secure: true,
-					maxAge: 60 * 60 * 8
-				});
-				cookies.set('token', hashData(userData), {
-					path: '/',
-					httpOnly: true,
-					sameSite: 'strict',
-					secure: true,
-					maxAge: 60 * 60 * 8
-				});
+				getJwt(event, cookies, userData);
 			} else {
 				return fail(400, { user, incorrect: true });
 			}
@@ -106,6 +83,8 @@ export const actions = {
 	logout: async ({ cookies }) => {
 		cookies.delete('user');
 		cookies.delete('token');
+		cookies.delete('jwt');
+		cookies.delete('redirect');
 		throw redirect(303, '/');
 	},
 	google: async () => {

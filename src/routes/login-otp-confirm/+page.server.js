@@ -1,5 +1,6 @@
 import { redirect, fail } from '@sveltejs/kit';
-import { hashData } from '$lib/server/crypto';
+import { getJwt } from '$lib/server/auth';
+
 import db from '$lib/server/db';
 import DescopeClient from '@descope/node-sdk';
 
@@ -33,20 +34,7 @@ export const actions = {
 				if (rows.length > 0) {
 					pass = true;
 					const userData = rows[0];
-					cookies.set('user', JSON.stringify(userData), {
-						path: '/',
-						httpOnly: true,
-						sameSite: 'strict',
-						secure: true,
-						maxAge: 60 * 60 * 8
-					});
-					cookies.set('token', hashData(userData), {
-						path: '/',
-						httpOnly: true,
-						sameSite: 'strict',
-						secure: true,
-						maxAge: 60 * 60 * 8
-					});
+					getJwt(event, cookies, userData);
 				} else {
 					return fail(400, { phone, incorrect: true });
 				}

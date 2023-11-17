@@ -10,6 +10,7 @@
 	import { computePosition, autoUpdate, flip, shift, offset, arrow } from '@floating-ui/dom';
 	import { storePopup } from '@skeletonlabs/skeleton';
 	storePopup.set({ computePosition, autoUpdate, flip, shift, offset, arrow });
+	export let data;
 </script>
 
 <Drawer>
@@ -37,7 +38,7 @@
 	<Sidebar />
 </Drawer>
 <AppShell slotSidebarLeft="w-0 md:w-64 bg-surface-500/10">
-	<svelte:fragment slot="header"><Header /></svelte:fragment>
+	<svelte:fragment slot="header"><Header userEmail={data.user.email} /></svelte:fragment>
 	<svelte:fragment slot="sidebarLeft"><Sidebar /></svelte:fragment>
 	<div class="p-4">
 		<slot />

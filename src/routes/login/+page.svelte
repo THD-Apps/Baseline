@@ -68,7 +68,7 @@
 				<span class="text-primary-500 font-bold text-xl">OR</span>
 				<div class="flex-grow border-2 border-primary-500 mx-2" />
 			</div>
-			<p class="text-center text-orange-300 mb-2">Login via Google, Apple, or Facebook</p>
+			<p class="text-center text-orange-300 font-bold mb-2">Login via Google, Apple, or Facebook</p>
 			<div class="grid grid-cols-3 gap-3">
 				<form method="POST" action="?/google" use:enhance>
 					<button
@@ -162,7 +162,9 @@
 				<span class="text-primary-500 font-bold text-xl">OR</span>
 				<div class="flex-grow border-2 border-primary-500 mx-2" />
 			</div>
-			<p class="text-center text-orange-300 mb-2">Send a one-time SMS verification code</p>
+			<p class="text-center text-orange-300 font-bold mb-2">
+				Send a one-time SMS verification code
+			</p>
 			<a
 				href="login-otp"
 				type="submit"

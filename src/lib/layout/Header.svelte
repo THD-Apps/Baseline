@@ -2,6 +2,7 @@
 	import { AppBar, getDrawerStore } from '@skeletonlabs/skeleton';
 	const drawerStore = getDrawerStore();
 	import { LightSwitch } from '@skeletonlabs/skeleton';
+	export let userEmail;
 </script>
 
 <AppBar>
@@ -30,7 +31,7 @@
 	<svelte:fragment slot="trail">
 		<LightSwitch />
 		<form action="/login?/logout" method="POST">
-			<button class="btn btn-primary">Logout</button>
+			<button class="btn btn-primary">{userEmail} Logout</button>
 		</form>
 	</svelte:fragment>
 	<!-- <svelte:fragment slot="headline">(headline)</svelte:fragment> -->
