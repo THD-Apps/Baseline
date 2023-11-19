@@ -1,12 +1,11 @@
 <script>
 	import { enhance } from '$app/forms';
-	export let form;
 	import { page } from '$app/stores';
+	import Password from '$lib/components/Password.svelte';
+	export let form;
 	let token = '';
 	$: token = $page.url.searchParams.get('token') ?? null;
 	let password = '';
-	import zxcvbn from 'zxcvbn';
-	$: strength = zxcvbn(password).score;
 </script>
 
 <div class="flex justify-center items-center h-full">
@@ -88,24 +87,9 @@
 						{:else}
 							<p>❌ At least 8 characters required</p>
 						{/if}
-						<p class="font-bold mt-5">
-							PASSWORD STRENGTH: <span
-								class:text-red-500={strength == 0}
-								class:text-red-400={strength == 1}
-								class:text-orange-500={strength == 2}
-								class:text-green-500={strength == 3}
-								class:text-green-700={strength == 4}
-								>{strength == 0
-									? 'Poor'
-									: strength == 1
-									? 'Weak'
-									: strength == 2
-									? 'Fair'
-									: strength == 3
-									? 'Strong'
-									: 'Excellent'}</span
-							>
-						</p>
+						<div class="mt-4 mb-1">
+							<Password pw={password} />
+						</div>
 					</div>
 				</form>
 			{/if}
